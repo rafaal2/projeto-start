@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ==================== CORPO E LAYOUT GERAL ==================== */
+body {
+  background-color: #f2f2f2;
+  min-height: 100vh;
+}
+
+/* ==================== CABEÇALHO ==================== */
+.header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.menu-toggle {
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.header-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+@media (min-width: 600px) {
+  .header-center {
+    margin-top: 0;
+  }
+}
+
+.search-container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+#search-input {
+  width: 100%;
+  padding: 10px 40px 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 0.95rem;
+  outline: none;
+  background: url('data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjOTk5OTk5IiBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNi4zNSAyQzMuNSAyIDEgNC41IDEgNy4zNSAwIDEwLjIwIDMuNSAxMi43IDYuMzUgMTIuN2MyLjg1IDAgNS4zNS0yLjUgNS4zNS01LjM1UzkuMiAyIDYuMzUgMnptNC4yNCA5LjQgMS4wMS0xLjAxIDEuNjggMS42OGwtMS4wMSAxLjAxeiIvPjwvc3Z2Pg==')
+              no-repeat 98% center;
+  background-size: 16px 16px;
+}
+
+#search-input:focus {
+  border-color: #ff8c42;
+}
+
+/* ==================== MENU LATERAL ==================== */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: #fff;
+  border-right: 1px solid #ccc;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  padding: 60px 20px 20px 20px;
+  transition: left 0.3s ease;
+  z-index: 1000;
+}
+
+.menu-title {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+}
+
+.side-menu ul {
+  list-style: none;
+  margin-top: 10px;
+}
+
+.side-menu li {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.side-menu li:last-child {
+  border-bottom: none;
+}
+
+.side-menu a {
+  text-decoration: none;
+  font-size: 1rem;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.side-menu a:hover {
+  color: #ff8c42;
+}
+
+.side-menu.open {
+  left: 0;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.3);
+  display: none;
+  z-index: 500;
+}
+
+.overlay.open {
+  display: block;
+}
+
+/* ==================== CONTEÚDO PRINCIPAL ==================== */
+.content {
+  margin: 30px;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.page-title {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* ==================== CARDS CONTAINER ==================== */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* ==================== CARD DE PROCESSO ==================== */
+.process-card {
+  background-color: #fff;
+  width: 280px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.process-card:hover {
+  transform: translateY(-5px);
+}
+
+.process-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.process-card h3 {
+  margin: 15px 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.process-card .btn-iniciar {
+  background-color: #ff8c42;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  font-size: 1rem;
+  cursor: pointer;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.process-card .btn-iniciar:hover {
+  background-color: #e66a1f;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  .cards-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .process-card {
+    width: 100%;
+    max-width: 350px;
+  }
+}

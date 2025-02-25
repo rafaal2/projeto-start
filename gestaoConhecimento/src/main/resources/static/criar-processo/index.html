@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Criar Processo - Projeto Start</title>
+    <!-- Import da Fonte Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- Cabeçalho (com menu hamburguer e barra de pesquisa) -->
+<header class="header">
+    <div class="header-left">
+        <button id="menu-toggle" class="menu-toggle">☰</button>
+    </div>
+    <div class="header-center">
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Pesquisar..." />
+        </div>
+    </div>
+</header>
+
+<!-- Menu Lateral -->
+<nav id="sideMenu" class="side-menu">
+    <h2 class="menu-title">Projeto Start</h2>
+    <ul>
+        <li><a href="#" id="btnhome">pagina inicial</a></li>
+        <li><a href="#" id="btnMinhaConta">Minha Conta</a></li>
+        <li><a href="#" id="btnFiltro">Pesquisa Filtrada</a></li>
+        <li><a href="#" id="btnCriar">Criar processo</a></li>
+        <li><a href="#" id="btnver">Meus aprendizados</a></li>
+    </ul>
+</nav>
+
+<div id="overlay" class="overlay"></div>
+
+<main class="content">
+    <h1 class="page-title">Gerenciamento de Processos</h1>
+    <div class="cards-container">
+        <div class="card">
+            <h2>Criar Processo</h2>
+            <p>Preencha as informações para criar um novo processo.</p>
+            <form id="formCriarProcesso">
+                <div class="input-group">
+                    <label for="nomeProcesso">Nome do Processo:</label>
+                    <input type="text" id="nomeProcesso" name="nomeProcesso" required />
+                </div>
+                <div class="input-group">
+                    <label for="setorProcesso">Setor (ID):</label>
+                    <input type="number" id="setorProcesso" name="setorProcesso" required />
+                </div>
+                <div class="input-group">
+                    <label for="etapasProcesso">Número de Etapas:</label>
+                    <input type="number" id="etapasProcesso" name="etapasProcesso" min="1" required />
+                </div>
+                <!-- Container para inputs dinâmicos das etapas -->
+                <div id="etapasContainer"></div>
+                <button type="submit" class="btn-submit">Criar</button>
+            </form>
+        </div>
+
+        <!-- Card 2: Editar Processo -->
+        <div class="card">
+            <h2>Editar Processo</h2>
+            <p>Edite um processo já existente no sistema.</p>
+            <button id="btnEditarProcesso" class="btn-submit">Editar</button>
+        </div>
+    </div>
+</main>
+
+<!-- Script JS -->
+<script src="script.js"></script>
+</body>
+</html>
