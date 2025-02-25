@@ -1,4 +1,4 @@
-// --- Menu Lateral e Pesquisa ---
+// Seletores do menu lateral
 const menuToggle = document.getElementById('menu-toggle');
 const sideMenu = document.getElementById('sideMenu');
 const overlay = document.getElementById('overlay');
@@ -13,6 +13,7 @@ overlay.addEventListener('click', () => {
   overlay.classList.remove('open');
 });
 
+// Navegação dos botões do menu lateral
 const btnCriar = document.getElementById('btnCriar');
 btnCriar.addEventListener('click', () => {
   window.location.href = '../criar-processo/index.html';

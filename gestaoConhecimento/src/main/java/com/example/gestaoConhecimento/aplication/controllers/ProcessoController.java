@@ -23,6 +23,12 @@ public class ProcessoController {
         return ResponseEntity.ok(processos);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ProcessoDTO> findById(@PathVariable Long id) {
+        ProcessoDTO processo = service.findById(id);
+        return ResponseEntity.ok(processo);
+    }
+
     @PostMapping
     public ResponseEntity<ProcessoDTO> save(@RequestBody ProcessoDTO dto) {
         dto = service.save(dto);

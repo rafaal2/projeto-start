@@ -74,6 +74,7 @@ public class ProcessoService {
 
     private void copyDtoToEntity(ProcessoDTO dto, Processo entity) {
         entity.setTitulo(dto.getTitulo());
+        entity.setDescricao(dto.getDescricao());
         Setor setor = setorRepository.findById(dto.getSetorId())
                 .orElseThrow(() -> new ResourceNotFoundException("Setor não encontrado para o ID: " + dto.getSetorId()));
         entity.setSetor(setor);

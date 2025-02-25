@@ -56,7 +56,8 @@ function createProcessCard(processo) {
   btnIniciar.classList.add('btn-iniciar');
   btnIniciar.textContent = 'Iniciar';
   btnIniciar.addEventListener('click', () => {
-    window.location.href = `../processo/processo.html?id=${processo.id}`;
+    // Redireciona para pre-processo/index.html passando o id do processo
+    window.location.href = `../pre-processo/index.html?id=${processo.id}`;
   });
   card.appendChild(btnIniciar);
 

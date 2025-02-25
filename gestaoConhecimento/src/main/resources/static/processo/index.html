@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Responder Processo - Projeto Start</title>
+    <!-- Import da Fonte Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+<header class="header">
+    <div class="header-left">
+        <button id="menu-toggle" class="menu-toggle">☰</button>
+    </div>
+    <div class="header-center">
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Digite sua pesquisa..." />
+        </div>
+    </div>
+</header>
+
+<!-- Menu Lateral -->
+<nav id="sideMenu" class="side-menu">
+    <h2 class="menu-title">Projeto Start</h2>
+    <ul>
+        <li><a href="#" id="btnhome">Pagina Inicial</a></li>
+        <li><a href="#" id="btnMinhaConta">Minha Conta</a></li>
+        <li><a href="#" id="btnFiltro">Pesquisa Filtrada</a></li>
+        <li><a href="#" id="btnCriar">Criar Processo</a></li>
+        <li><a href="#" id="btnver">Meus Aprendizados</a></li>
+    </ul>
+</nav>
+
+<!-- Overlay para fechar o menu -->
+<div id="overlay" class="overlay"></div>
+
+<!-- Conteúdo Principal -->
+<main class="content">
+    <h1 class="page-title">Responder Processo</h1>
+    <div id="processoDetails"></div>
+    <form id="formResponderProcesso">
+        <div id="etapasContainer"></div>
+        <button type="submit" class="btn-submit">Enviar Respostas</button>
+    </form>
+</main>
+
+<!-- Script JS -->
+<script src="script.js"></script>
+</body>
+</html>

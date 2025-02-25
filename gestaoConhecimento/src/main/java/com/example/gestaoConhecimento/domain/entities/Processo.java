@@ -1,5 +1,6 @@
 package com.example.gestaoConhecimento.domain.entities;
 
+import com.example.gestaoConhecimento.domain.enums.Dificuldade;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,9 +24,15 @@ public class Processo {
     @Column
     private String titulo;
 
+    @Column
+    private String descricao;
+
     @ManyToOne
     @JoinColumn(name = "setor_id")
     private Setor setor;
+
+    @Enumerated(EnumType.STRING)
+    private Dificuldade dificuldade;
 
     @OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Etapa> etapas = new ArrayList<>();

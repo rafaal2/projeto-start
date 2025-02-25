@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Responder Processo - Projeto Start</title>
+    <title>Detalhes do Processo - Projeto Start</title>
     <!-- Import da Fonte Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -11,13 +11,14 @@
     <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
+<!-- Cabeçalho -->
 <header class="header">
     <div class="header-left">
         <button id="menu-toggle" class="menu-toggle">☰</button>
     </div>
     <div class="header-center">
         <div class="search-container">
-            <input type="text" id="search-input" placeholder="Digite sua pesquisa..." />
+            <input type="text" id="search-input" placeholder="Pesquisar..." />
         </div>
     </div>
 </header>
@@ -29,25 +30,39 @@
         <li><a href="index.html" id="btnhome">Pagina Inicial</a></li>
         <li><a href="#" id="btnMinhaConta">Minha Conta</a></li>
         <li><a href="#" id="btnFiltro">Pesquisa Filtrada</a></li>
-        <li><a href="criar-processo/index.html" id="btnCriar">Criar Processo</a></li>
+        <li><a href="#" id="btnCriar">Criar Processo</a></li>
         <li><a href="#" id="btnver">Meus Aprendizados</a></li>
     </ul>
 </nav>
 
-<!-- Overlay para fechar o menu -->
 <div id="overlay" class="overlay"></div>
 
 <!-- Conteúdo Principal -->
 <main class="content">
-    <h1 class="page-title">Responder Processo</h1>
-    <div id="processoDetails"></div>
-    <form id="formResponderProcesso">
-        <div id="etapasContainer"></div>
-        <button type="submit" class="btn-submit">Enviar Respostas</button>
-    </form>
+    <!-- Banner do Processo -->
+    <section class="process-banner">
+        <img src="https://png.pngtree.com/png-vector/20220528/ourlarge/pngtree-minimalist-graphic-depiction-of-contemporary-business-ideas-collection-vector-png-image_13688376.jpg" alt="Banner Processo" class="banner-img">
+        <div class="banner-title">
+            <h1 id="processoTitulo"></h1>
+        </div>
+    </section>
+
+    <!-- Container com dois cards: Descrição e Etapas -->
+    <div class="cards-container">
+        <div class="card process-description">
+            <h2>Descrição</h2>
+            <p id="processoDescricao"></p>
+        </div>
+        <div class="card process-etapas">
+            <h2>Etapas</h2>
+            <ul id="etapasList"></ul>
+        </div>
+    </div>
+
+    <!-- Botão global para iniciar o processo -->
+    <button id="btnComecarProcesso" class="btn-começar-global">Começar</button>
 </main>
 
-<!-- Script JS -->
-<script src="processo.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
