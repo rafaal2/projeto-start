@@ -24,7 +24,7 @@ public class Processo {
     @Column
     private String titulo;
 
-    @Column
+    @Column(length = 1000)
     private String descricao;
 
     @ManyToOne

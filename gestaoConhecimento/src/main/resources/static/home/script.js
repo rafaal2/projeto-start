@@ -36,27 +36,29 @@ btnhome.addEventListener('click', () => {
 
 // Função para criar o card de um processo
 function createProcessCard(processo) {
-  // Cria o container do card
   const card = document.createElement('div');
   card.classList.add('process-card');
 
-  // Cria a imagem
   const img = document.createElement('img');
-  img.src = 'https://png.pngtree.com/png-vector/20220528/ourlarge/pngtree-minimalist-graphic-depiction-of-contemporary-business-ideas-collection-vector-png-image_13688376.jpg';
+  // Verifica o setor e define a imagem de acordo
+  if (processo.setorNome && processo.setorNome.toLowerCase().includes('rh')) {
+    img.src = 'https://funcional.com/images/uploads/posts/entenda-por-que-contratar-mais-um-profissional-de-rh.png';
+  } else if (processo.setorNome && processo.setorNome.toLowerCase().includes('financeiro')) {
+    img.src = 'https://www.idebrasil.com.br/blog/wp-content/uploads/2019/12/blog-o-que-e-o-que-faz-setor-financeiro-de-uma-empresa-850x441.jpg';
+  } else {
+    img.src = 'https://png.pngtree.com/png-vector/20220528/ourlarge/pngtree-minimalist-graphic-depiction-of-contemporary-business-ideas-collection-vector-png-image_13688376.jpg';
+  }
   img.alt = processo.titulo;
   card.appendChild(img);
 
-  // Cria o título do processo
   const title = document.createElement('h3');
   title.textContent = processo.titulo;
   card.appendChild(title);
 
-  // Cria o botão de iniciar
   const btnIniciar = document.createElement('button');
   btnIniciar.classList.add('btn-iniciar');
   btnIniciar.textContent = 'Iniciar';
   btnIniciar.addEventListener('click', () => {
-    // Redireciona para pre-processo/index.html passando o id do processo
     window.location.href = `../pre-processo/index.html?id=${processo.id}`;
   });
   card.appendChild(btnIniciar);
@@ -67,7 +69,7 @@ function createProcessCard(processo) {
 // Função para buscar os processos via API
 async function fetchProcessos() {
   try {
-    const response = await fetch('http://localhost:8080/processos');
+    const response = await fetch('/processos');
     if (response.ok) {
       const processos = await response.json();
       const processosContainer = document.getElementById('processosContainer');

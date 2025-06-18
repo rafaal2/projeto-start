@@ -5,6 +5,8 @@ import com.example.gestaoConhecimento.aplication.services.exceptions.ResourceNot
 import com.example.gestaoConhecimento.domain.dtos.EtapaDTO;
 import com.example.gestaoConhecimento.domain.entities.Etapa;
 import com.example.gestaoConhecimento.domain.entities.Processo;
+import com.example.gestaoConhecimento.domain.entities.Alternativa;
+import com.example.gestaoConhecimento.domain.enums.TipoEtapa;
 import com.example.gestaoConhecimento.domain.repositories.EtapaRepository;
 import com.example.gestaoConhecimento.domain.repositories.ProcessoRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -12,9 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class EtapaService {
@@ -35,10 +36,11 @@ public class EtapaService {
     @Transactional(readOnly = true)
     public List<EtapaDTO> findAll() {
         List<Etapa> etapas = etapaRepository.findAll();
-        return etapas.stream()
-                .map(etapa -> new EtapaDTO(etapa))
-                .collect(Collectors.toList());
+        List<EtapaDTO> dtos = new ArrayList<>();
+        etapas.forEach(etapa -> dtos.add(new EtapaDTO(etapa)));
+        return dtos;
     }
+
     @Transactional
     public EtapaDTO save(EtapaDTO dto) {
         Etapa entity = new Etapa();
@@ -72,8 +74,26 @@ public class EtapaService {
     }
 
     private void copyDtoToEntity(EtapaDTO dto, Etapa entity) {
-        entity.setPergunta(dto.getPergunta());
-        entity.setResposta(dto.getResposta());
+        entity.setTitulo(dto.getTitulo());
+        if(dto.getTipo() != null) {
+            entity.setTipo(TipoEtapa.valueOf(dto.getTipo()));
+        }
+        entity.setConteudo(dto.getConteudo());
+        // Mapeamento das alternativas se existir (para tipo QUESTION)
+        if (dto.getAlternativas() != null) {
+            if(entity.getAlternativas() == null) {
+                entity.setAlternativas(new ArrayList<>());
+            } else {
+                entity.getAlternativas().clear();
+            }
+            dto.getAlternativas().forEach(altDTO -> {
+                Alternativa alt = new Alternativa();
+                alt.setTexto(altDTO.getTexto());
+                alt.setCorreta(altDTO.isCorreta());
+                alt.setEtapa(entity);
+                entity.getAlternativas().add(alt);
+            });
+        }
         Processo processo = processoRepository.findById(dto.getProcessoId())
                 .orElseThrow(() -> new ResourceNotFoundException("Processo não encontrado para o ID: " + dto.getProcessoId()));
         entity.setProcesso(processo);

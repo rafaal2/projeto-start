@@ -15,7 +15,7 @@ overlay.addEventListener('click', () => {
 
 const btnhome = document.getElementById('btnhome');
 btnhome.addEventListener('click', () => {
-  window.location.href = 'index.html';
+  window.location.href = '../home/index.html';
 });
 
 const btnMinhaConta = document.getElementById('btnMinhaConta');
@@ -49,7 +49,7 @@ const processoId = getQueryParameter('id');
 // --- Buscar detalhes do processo via API ---
 async function fetchProcessDetails() {
   try {
-    const response = await fetch(`http://localhost:8080/processos/${processoId}`);
+    const response = await fetch(`/processos/${processoId}`);
     if (response.ok) {
       const processo = await response.json();
       renderProcessDetails(processo);
@@ -62,8 +62,20 @@ async function fetchProcessDetails() {
 }
 
 function renderProcessDetails(processo) {
-  // Preenche o banner com o título do processo
+  // Preenche o banner com título, dificuldade e setor
   document.getElementById('processoTitulo').textContent = processo.titulo;
+  document.getElementById('processoDificuldade').textContent = processo.dificuldade ? processo.dificuldade : "Não definida";
+  document.getElementById('processoSetor').textContent = processo.setorNome ? processo.setorNome : "Não definido";
+
+  // Escolhe a imagem conforme o setor
+  const bannerImg = document.querySelector('.banner-img');
+  if (processo.setorNome.toLowerCase().includes('rh')) {
+    bannerImg.src = "https://funcional.com/images/uploads/posts/entenda-por-que-contratar-mais-um-profissional-de-rh.png";
+  } else if (processo.setorNome.toLowerCase().includes('financeiro')) {
+    bannerImg.src = "https://www.idebrasil.com.br/blog/wp-content/uploads/2019/12/blog-o-que-e-o-que-faz-setor-financeiro-de-uma-empresa-850x441.jpg";
+  } else {
+    bannerImg.src = "https://png.pngtree.com/png-vector/20220528/ourlarge/pngtree-minimalist-graphic-depiction-of-contemporary-business-ideas-collection-vector-png-image_13688376.jpg"; // Default
+  }
 
   // Preenche o card de descrição
   document.getElementById('processoDescricao').textContent = processo.descricao ? processo.descricao : "Sem descrição";
@@ -78,7 +90,7 @@ function renderEtapas(etapas) {
   if (etapas && etapas.length > 0) {
     etapas.forEach((etapa, index) => {
       const li = document.createElement('li');
-      li.textContent = `Etapa ${index + 1}: ${etapa.pergunta}`;
+      li.textContent = `Etapa ${index + 1}: ${etapa.titulo}`;
       ul.appendChild(li);
     });
   } else {
@@ -86,10 +98,11 @@ function renderEtapas(etapas) {
   }
 }
 
+// Botão global para iniciar o processo
 const btnComecarProcesso = document.getElementById('btnComecarProcesso');
 btnComecarProcesso.addEventListener('click', () => {
-  // Redireciona para a página de resposta completa do processo
-  window.location.href = `responder-processo.html?processoId=${processoId}`;
+  // Redireciona para responder/index.html com o parâmetro do processo
+  window.location.href = `../responder/index.html?processoId=${processoId}`;
 });
 
 fetchProcessDetails();

@@ -24,7 +24,7 @@ public class ProcessoDTO {
     @Size(max = 100, message = "O título deve ter no máximo 100 caracteres")
     private String titulo;
 
-    // Novo campo de descrição
+    @Size(max = 1000, message = "a descrição deve ter no máximo 1000 caracteres")
     private String descricao;
 
     // Novo campo para dificuldade (ex.: FACIL, MEDIO, DIFICIL, ATIPICO)

@@ -46,7 +46,7 @@ let currentProcesso = null; // para armazenar os dados do processo atual
 // --- Função para buscar os detalhes do processo via API ---
 async function fetchProcesso() {
   try {
-    const response = await fetch(`http://localhost:8080/processos/${processoId}`);
+    const response = await fetch(`/processos/${processoId}`);
     if (response.ok) {
       const processo = await response.json();
       currentProcesso = processo;
@@ -120,7 +120,7 @@ formResponderProcesso.addEventListener('submit', async (event) => {
   };
 
   try {
-    const response = await fetch('http://localhost:8080/respostas-usuario', {
+    const response = await fetch('/respostas-usuario', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

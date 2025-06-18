@@ -1,4 +1,4 @@
-// Seletores do menu lateral
+// --- Menu Lateral e Navegação ---
 const menuToggle = document.getElementById('menu-toggle');
 const sideMenu = document.getElementById('sideMenu');
 const overlay = document.getElementById('overlay');
@@ -12,7 +12,6 @@ overlay.addEventListener('click', () => {
   sideMenu.classList.remove('open');
   overlay.classList.remove('open');
 });
-
 
 const btnCriar = document.getElementById('btnCriar');
 btnCriar.addEventListener('click', () => {
@@ -39,13 +38,12 @@ let setoresMap = {}; // Mapeia o nome para o id do setor
 
 async function fetchSetores() {
   try {
-    const response = await fetch('http://localhost:8080/setores');
+    const response = await fetch('/setores');
     if (response.ok) {
       const setores = await response.json();
       const datalist = document.getElementById('setoresDatalist');
       datalist.innerHTML = '';
       setores.forEach(setor => {
-        // Armazena a relação: nome => id
         setoresMap[setor.nome] = setor.id;
         const option = document.createElement('option');
         option.value = setor.nome;
@@ -70,44 +68,129 @@ etapasProcessoInput.addEventListener('input', () => {
   etapasContainer.innerHTML = '';
   if (numEtapas > 0) {
     for (let i = 1; i <= numEtapas; i++) {
+      // Cria um container para cada etapa
       const etapaDiv = document.createElement('div');
       etapaDiv.classList.add('etapa-item');
+      etapaDiv.dataset.etapaIndex = i; // útil para identificar
 
-      // Pergunta
-      const labelPergunta = document.createElement('label');
-      labelPergunta.textContent = `Etapa ${i} - Pergunta:`;
-      labelPergunta.setAttribute('for', `perguntaEtapa${i}`);
-      const inputPergunta = document.createElement('input');
-      inputPergunta.type = 'text';
-      inputPergunta.id = `perguntaEtapa${i}`;
-      inputPergunta.name = `perguntaEtapa${i}`;
-      inputPergunta.required = true;
+      // Título da Etapa
+      const labelTitulo = document.createElement('label');
+      labelTitulo.textContent = `Etapa ${i} - Título:`;
+      labelTitulo.setAttribute('for', `tituloEtapa${i}`);
+      const inputTitulo = document.createElement('input');
+      inputTitulo.type = 'text';
+      inputTitulo.id = `tituloEtapa${i}`;
+      inputTitulo.name = `tituloEtapa${i}`;
+      inputTitulo.required = true;
 
-      // Resposta
-      const labelResposta = document.createElement('label');
-      labelResposta.textContent = `Etapa ${i} - Resposta:`;
-      labelResposta.setAttribute('for', `respostaEtapa${i}`);
-      const inputResposta = document.createElement('input');
-      inputResposta.type = 'text';
-      inputResposta.id = `respostaEtapa${i}`;
-      inputResposta.name = `respostaEtapa${i}`;
-      inputResposta.required = true;
+      // Tipo da Etapa
+      const labelTipo = document.createElement('label');
+      labelTipo.textContent = `Etapa ${i} - Tipo:`;
+      labelTipo.setAttribute('for', `tipoEtapa${i}`);
+      const selectTipo = document.createElement('select');
+      selectTipo.id = `tipoEtapa${i}`;
+      selectTipo.name = `tipoEtapa${i}`;
+      selectTipo.required = true;
+      // Opções: QUESTION, TEXT, LINK
+      const optDefault = document.createElement('option');
+      optDefault.value = "";
+      optDefault.textContent = "Selecione...";
+      selectTipo.appendChild(optDefault);
+      ["QUESTION", "TEXT", "LINK"].forEach(tipo => {
+        const opt = document.createElement('option');
+        opt.value = tipo;
+        opt.textContent = tipo;
+        selectTipo.appendChild(opt);
+      });
 
-      etapaDiv.appendChild(labelPergunta);
-      etapaDiv.appendChild(inputPergunta);
-      etapaDiv.appendChild(labelResposta);
-      etapaDiv.appendChild(inputResposta);
+      // Container para detalhes específicos da etapa (alternativas ou conteúdo)
+      const detalhesDiv = document.createElement('div');
+      detalhesDiv.id = `detalhesEtapa${i}`;
+
+      // Quando o tipo mudar, atualiza os detalhes
+      selectTipo.addEventListener('change', () => {
+        updateDetalhesEtapa(i, selectTipo.value);
+      });
+
+      etapaDiv.appendChild(labelTitulo);
+      etapaDiv.appendChild(inputTitulo);
+      etapaDiv.appendChild(labelTipo);
+      etapaDiv.appendChild(selectTipo);
+      etapaDiv.appendChild(detalhesDiv);
 
       etapasContainer.appendChild(etapaDiv);
     }
   }
 });
 
+// Função que atualiza os detalhes de uma etapa com base no tipo
+function updateDetalhesEtapa(index, tipo) {
+  const detalhesDiv = document.getElementById(`detalhesEtapa${index}`);
+  detalhesDiv.innerHTML = ""; // Limpa detalhes anteriores
+
+  if (tipo === "TEXT" || tipo === "LINK") {
+    // Para TEXT ou LINK, exibir um único campo de conteúdo
+    const labelConteudo = document.createElement('label');
+    labelConteudo.textContent = `Etapa ${index} - Conteúdo:`;
+    labelConteudo.setAttribute('for', `conteudoEtapa${index}`);
+    const inputConteudo = document.createElement('input');
+    inputConteudo.type = 'text';
+    inputConteudo.id = `conteudoEtapa${index}`;
+    inputConteudo.name = `conteudoEtapa${index}`;
+    inputConteudo.required = true;
+    detalhesDiv.appendChild(labelConteudo);
+    detalhesDiv.appendChild(inputConteudo);
+  } else if (tipo === "QUESTION") {
+    // Para QUESTION, exibir um container para alternativas e um botão para adicioná-las
+    const alternativasContainer = document.createElement('div');
+    alternativasContainer.id = `alternativasContainer${index}`;
+
+    // Botão para adicionar alternativa
+    const btnAddAlt = document.createElement('button');
+    btnAddAlt.type = 'button';
+    btnAddAlt.textContent = 'Adicionar Alternativa';
+    btnAddAlt.classList.add('btn-add-alt');
+    btnAddAlt.addEventListener('click', () => {
+      addAlternativa(index);
+    });
+
+    detalhesDiv.appendChild(alternativasContainer);
+    detalhesDiv.appendChild(btnAddAlt);
+  }
+}
+
+// Função para adicionar uma alternativa para uma etapa QUESTION
+function addAlternativa(etapaIndex) {
+  const container = document.getElementById(`alternativasContainer${etapaIndex}`);
+  const altDiv = document.createElement('div');
+  altDiv.classList.add('alternativa-item');
+
+  const inputTexto = document.createElement('input');
+  inputTexto.type = 'text';
+  inputTexto.placeholder = 'Texto da alternativa';
+  inputTexto.required = true;
+  inputTexto.classList.add('alt-texto');
+
+  const checkboxCorreta = document.createElement('input');
+  checkboxCorreta.type = 'checkbox';
+  checkboxCorreta.classList.add('alt-correta');
+
+  const labelCorreta = document.createElement('label');
+  labelCorreta.textContent = 'Correta';
+  labelCorreta.prepend(checkboxCorreta);
+
+  altDiv.appendChild(inputTexto);
+  altDiv.appendChild(labelCorreta);
+
+  container.appendChild(altDiv);
+}
+
 formCriarProcesso.addEventListener('submit', async (event) => {
   event.preventDefault();
 
   const nomeProcesso = document.getElementById('nomeProcesso').value;
   const descricaoProcesso = document.getElementById('descricaoProcesso').value;
+  const dificuldadeProcesso = document.getElementById('dificuldadeProcesso').value;
   const setorNome = document.getElementById('setorProcessoName').value;
   const numEtapas = parseInt(etapasProcessoInput.value);
 
@@ -120,14 +203,29 @@ formCriarProcesso.addEventListener('submit', async (event) => {
 
   const etapas = [];
   for (let i = 1; i <= numEtapas; i++) {
-    const pergunta = document.getElementById(`perguntaEtapa${i}`).value;
-    const resposta = document.getElementById(`respostaEtapa${i}`).value;
-    etapas.push({ pergunta, resposta });
+    const titulo = document.getElementById(`tituloEtapa${i}`).value;
+    const tipo = document.getElementById(`tipoEtapa${i}`).value;
+    let conteudo = null;
+    let alternativas = null;
+    if (tipo === "TEXT" || tipo === "LINK") {
+      conteudo = document.getElementById(`conteudoEtapa${i}`).value;
+    } else if (tipo === "QUESTION") {
+      alternativas = [];
+      const container = document.getElementById(`alternativasContainer${i}`);
+      const altItems = container.querySelectorAll('.alternativa-item');
+      altItems.forEach(altItem => {
+        const texto = altItem.querySelector('.alt-texto').value;
+        const correta = altItem.querySelector('.alt-correta').checked;
+        alternativas.push({ texto, correta });
+      });
+    }
+    etapas.push({ titulo, tipo, conteudo, alternativas });
   }
 
   const processoData = {
     titulo: nomeProcesso,
     descricao: descricaoProcesso,
+    dificuldade: dificuldadeProcesso,
     setorId: parseInt(setorId),
     etapas: etapas
   };
@@ -135,7 +233,7 @@ formCriarProcesso.addEventListener('submit', async (event) => {
   console.log("Enviando dados do processo:", processoData);
 
   try {
-    const response = await fetch('http://localhost:8080/processos', {
+    const response = await fetch('/processos', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -156,10 +254,4 @@ formCriarProcesso.addEventListener('submit', async (event) => {
     console.error("Erro na requisição:", error);
     alert("Erro ao conectar com o servidor.");
   }
-});
-
-/* Botão Editar Processo */
-const btnEditarProcesso = document.getElementById('btnEditarProcesso');
-btnEditarProcesso.addEventListener('click', () => {
-  window.location.href = 'editar-processo.html';
 });

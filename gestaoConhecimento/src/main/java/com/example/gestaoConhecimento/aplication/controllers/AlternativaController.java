@@ -1,35 +1,28 @@
 package com.example.gestaoConhecimento.aplication.controllers;
 
-import com.example.gestaoConhecimento.domain.dtos.ProcessoDTO;
-import com.example.gestaoConhecimento.aplication.services.ProcessoService;
+import com.example.gestaoConhecimento.domain.dtos.AlternativaDTO;
+import com.example.gestaoConhecimento.aplication.services.AlternativaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
-import java.util.List;
 
 @RestController
-@RequestMapping("/processos")
-public class ProcessoController {
+@RequestMapping("/alternativas")
+public class AlternativaController {
 
     @Autowired
-    private ProcessoService service;
-
-    @GetMapping
-    public ResponseEntity<List<ProcessoDTO>> findAll() {
-        List<ProcessoDTO> processos = service.findAll();
-        return ResponseEntity.ok(processos);
-    }
+    private AlternativaService service;
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProcessoDTO> findById(@PathVariable Long id) {
-        ProcessoDTO processo = service.findById(id);
-        return ResponseEntity.ok(processo);
+    public ResponseEntity<AlternativaDTO> findById(@PathVariable Long id) {
+        AlternativaDTO dto = service.findById(id);
+        return ResponseEntity.ok(dto);
     }
 
     @PostMapping
-    public ResponseEntity<ProcessoDTO> save(@RequestBody ProcessoDTO dto) {
+    public ResponseEntity<AlternativaDTO> save(@RequestBody AlternativaDTO dto) {
         dto = service.save(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
@@ -37,7 +30,7 @@ public class ProcessoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProcessoDTO> update(@PathVariable Long id, @RequestBody ProcessoDTO dto) {
+    public ResponseEntity<AlternativaDTO> update(@PathVariable Long id, @RequestBody AlternativaDTO dto) {
         dto = service.update(id, dto);
         return ResponseEntity.ok(dto);
     }

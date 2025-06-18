@@ -175,6 +175,7 @@ body {
   background: rgba(0,0,0,0.5);
   padding: 10px 15px;
   border-radius: 5px;
+  text-align: left;
 }
 
 .banner-title h1 {
@@ -183,23 +184,30 @@ body {
   margin: 0;
 }
 
+.process-meta {
+  margin-top: 5px;
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
 /* ==================== CARDS CONTAINER ==================== */
 .cards-container {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 /* ==================== CARDS (DESCRIÇÃO E ETAPAS) ==================== */
 .card {
-  flex: 1 1 calc(50% - 20px);
-  max-width: calc(50% - 20px);
+  width: 100%;
+  max-width: 500px;
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   text-align: left;
+  margin-bottom: 20px;
 }
 
 .process-description h2,
@@ -222,27 +230,42 @@ body {
 }
 
 .process-etapas ul li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 8px;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-/* ==================== BOTÃO COMEÇAR GLOBAL ==================== */
+/* Container para a primeira etapa com botão start */
+.etapa-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+/* Botão Global "Começar" */
 .btn-começar-global {
-  background-color: #ff8c42;
+  background: linear-gradient(45deg, #ff8c42, #e66a1f);
   color: #fff;
   border: none;
   padding: 15px 30px;
   font-size: 1.2rem;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: transform 0.2s, background 0.3s ease;
   margin-top: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .btn-começar-global:hover {
-  background-color: #e66a1f;
+  transform: scale(1.05);
+  background: linear-gradient(45deg, #e66a1f, #ff8c42);
 }
 
 /* ==================== RESPONSIVIDADE ==================== */
